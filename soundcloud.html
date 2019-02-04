@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.3.0.js"></script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="js/client_key.js"></script>
+    </script>
+    <style media="screen">
+      body {
+        text-align: center;
+      }
+      .main-wrapper {
+        padding-top: 60px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <audio id="main" class="customPlayer" controls>
+      </audio>
+      <h4 id="music-title">
+      <h5 id="music-artist">
+    </div>
+    <script>
+      var xhr = new XMLHttpRequest();
+      var stream = document.getElementById("main");
+      var client_id = '?client_id=' + client_key; //loaded api key from extrenal file
+      xhr.open('GET', 'https://api.soundcloud.com/tracks/414007197.json' + client_id);
+      xhr.onload = function(){
+        var track = JSON.parse(xhr.responseText);
+        stream.src = track.stream_url + client_id;
+        document.getElementById('music-title').innerHTML = track.title
+        document.getElementById('music-artist').innerHTML = track.user.username
+        stream.playbackRate = 2;
+      };
+      xhr.send();
+    </script>
+  </body>
+</html>
